@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,9 +24,9 @@ Route::get('/welcome', function(){
     return 'Selamat Datang';
 });
 
-Route::get('/about', function(){
-    return 'NIM: 244107020084 Nama: Qruzeeta Prasna';
-});
+// Route::get('/about', function(){
+//     return 'NIM: 244107020084 Nama: Qruzeeta Prasna';
+// });
 
 Route::get('/user/{nama?}', function($nama='jhon'){
     return 'Nama saya '. $nama;
@@ -76,3 +82,20 @@ Route::redirect('/here', '/there');
 
 Route::view('/welcome', 'welcome');
 Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+
+Route:: get('/hello', [WelcomeController::class, 'hello']);
+
+Route:: get('/', [HomeController::class, 'index']);
+Route:: get('/about', [AboutController::class, 'about']);
+
+Route:: get('/article', function(){
+    //
+});
+
+Route::get('/article/{id}', [ArticleController::class, 'article']);
+
+Route::resource('photos', PhotoController::class);
+
+Route::resource('photos', PhotoController::class)->only(['index', 'show']);
+
+Route::resource('photos', PhotoController::class)->except(['create', 'store', 'update', 'destroy']);
